@@ -1,0 +1,40 @@
+# -*- coding: utf-8 -*-
+"""
+Created on Tue May 12 23:52:52 2020
+
+@author: redek
+"""
+
+from bs4 import BeautifulSoup as bs
+import requests
+
+r = requests.get("https://en.wikipedia.org/wiki/Toy_Story_3")
+
+soup = bs(r.content)
+
+content = soup.prettify()
+
+print(content)
+
+info_box = soup.find(class_="infobox vevent")
+
+print(info_box.prettify())
+info_rows = info_box.find_all("tr")
+
+for row in info_rows:
+    print(row.prettify())
+    
+
+movie_info = {}
+
+for index, row in enumerate(info_rows):
+    if index == 0:
+        movie_info['title'] = row.find("th").get_text()
+    elif index ==1:
+        continue
+    else:
+        content_value = row.info("td")
+        content_value = row.find("td")
+
+print("movie_info")
+
